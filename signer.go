@@ -52,7 +52,7 @@ var MultiHash = func(in, out chan interface{}) {
 			for i := 0; i < 6; i++ {
 				wg2.Add(1)
 				data := strconv.Itoa(i) + s
-				go mh(s, resArray, data, i, wg2, mu)
+				go mh(resArray, data, i, wg2, mu)
 			}
 
 			wg2.Wait()
@@ -64,7 +64,7 @@ var MultiHash = func(in, out chan interface{}) {
 	wg.Wait()
 }
 
-func mh(s string, resArray []string, data string, i int, wg *sync.WaitGroup, mu *sync.Mutex){
+func mh(resArray []string, data string, i int, wg *sync.WaitGroup, mu *sync.Mutex){
 	defer wg.Done()
 	data = DataSignerCrc32(data)
 	mu.Lock()
